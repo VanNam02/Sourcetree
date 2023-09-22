@@ -1,3 +1,4 @@
 Hello 
 Second line in the file.
 Third line in the file.
+Fourth.
