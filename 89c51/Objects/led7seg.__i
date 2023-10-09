@@ -1,0 +1,1 @@
+"led7seg.c" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\led7seg.lst) TABS (2) OBJECT(.\Objects\led7seg.obj)
