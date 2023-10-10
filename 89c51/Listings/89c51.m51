@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    10/09/2023  20:58:40  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    10/10/2023  22:45:39  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
@@ -12,6 +12,8 @@ INPUT MODULES INCLUDED:
   .\Objects\STARTUP.obj (?C_STARTUP)
   .\Objects\main.obj (MAIN)
   D:\DOWNLOAD\C51\LIB\C51S.LIB (?C_INIT)
+  D:\DOWNLOAD\C51\LIB\C51S.LIB (?C?SIDIV)
+  D:\DOWNLOAD\C51\LIB\C51S.LIB (?C?UIDIV)
 
 
 LINK MAP OF MODULE:  .\Objects\89c51 (?C_STARTUP)
@@ -23,45 +25,51 @@ LINK MAP OF MODULE:  .\Objects\89c51 (?C_STARTUP)
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
             DATA    0008H     000AH     UNIT         ?DT?MAIN
-            IDATA   0012H     0001H     UNIT         ?STACK
+            DATA    0012H     0004H     UNIT         _DATA_GROUP_
+            IDATA   0016H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
             CODE    0800H     008CH     UNIT         ?C_C51STARTUP
-            CODE    088CH     0026H     UNIT         ?PR?_DELAY?MAIN
-            CODE    08B2H     001DH     UNIT         ?PR?MAIN?MAIN
-            CODE    08CFH     000DH     UNIT         ?C_INITSEG
+            CODE    088CH     008BH     UNIT         ?C?LIB_CODE
+            CODE    0917H     006BH     UNIT         ?PR?LED7SEG?MAIN
+            CODE    0982H     0026H     UNIT         ?PR?_DELAY?MAIN
+            CODE    09A8H     000DH     UNIT         ?C_INITSEG
+            CODE    09B5H     0005H     UNIT         ?PR?MAIN?MAIN
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\89c51 (?C_STARTUP)
 
 
-SEGMENT
-  +--> CALLED SEGMENT
----------------------
-?C_C51STARTUP
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
   +--> ?PR?MAIN?MAIN
   +--> ?C_INITSEG
 
-?PR?MAIN?MAIN
+?PR?MAIN?MAIN                  -----    -----
+  +--> ?PR?LED7SEG?MAIN
+
+?PR?LED7SEG?MAIN               0012H    0004H
   +--> ?PR?_DELAY?MAIN
 
 
 
 SYMBOL TABLE OF MODULE:  .\Objects\89c51 (?C_STARTUP)
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  10/10/2023  22:45:39  PAGE 2
+
+
 
   VALUE           TYPE          NAME
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
   C:0800H         SEGMENT       ?C_C51STARTUP
-  I:0012H         SEGMENT       ?STACK
+  I:0016H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  10/09/2023  20:58:40  PAGE 2
-
-
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
   D:0083H         SYMBOL        DPH
@@ -95,39 +103,65 @@ SYMBOL TABLE OF MODULE:  .\Objects\89c51 (?C_STARTUP)
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:00A0H         PUBLIC        P2
-  C:088CH         PUBLIC        _delay
-  C:08B2H         PUBLIC        main
+  C:0982H         PUBLIC        _delay
+  B:00B0H.0       PUBLIC        P3_0
+  B:00B0H.1       PUBLIC        P3_1
+  C:09B5H         PUBLIC        main
   D:0008H         PUBLIC        port
+  C:0917H         PUBLIC        Led7Seg
   -------         PROC          _DELAY
   D:0006H         SYMBOL        value
   -------         DO            
   D:0004H         SYMBOL        x
   D:0002H         SYMBOL        y
   -------         ENDDO         
-  C:088CH         LINE#         5
-  C:088CH         LINE#         7
-  C:089CH         LINE#         8
-  C:08B1H         LINE#         9
+  C:0982H         LINE#         7
+  C:0982H         LINE#         9
+  C:0992H         LINE#         10
+  C:09A7H         LINE#         11
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  10/10/2023  22:45:39  PAGE 3
+
+
   -------         ENDPROC       _DELAY
-  -------         PROC          MAIN
+  -------         PROC          LED7SEG
   -------         DO            
-  D:0082H         SYMBOL        i
+  D:0012H         SYMBOL        i
+  D:0014H         SYMBOL        j
   -------         ENDDO         
-  C:08B2H         LINE#         10
-  C:08B2H         LINE#         12
-  C:08B5H         LINE#         13
-  C:08BEH         LINE#         14
-  C:08C5H         LINE#         15
-  C:08CEH         LINE#         16
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  10/09/2023  20:58:40  PAGE 3
-
-
+  C:0917H         LINE#         13
+  C:0917H         LINE#         15
+  C:091CH         LINE#         16
+  C:0921H         LINE#         17
+  C:0933H         LINE#         18
+  C:0935H         LINE#         19
+  C:093CH         LINE#         20
+  C:093EH         LINE#         21
+  C:0950H         LINE#         22
+  C:0952H         LINE#         23
+  C:0959H         LINE#         24
+  C:095BH         LINE#         25
+  C:096EH         LINE#         26
+  C:0981H         LINE#         27
+  -------         ENDPROC       LED7SEG
+  -------         PROC          MAIN
+  C:09B5H         LINE#         28
+  C:09B5H         LINE#         30
+  C:09B5H         LINE#         31
+  C:09B8H         LINE#         32
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
+  -------         MODULE        ?C?SIDIV
+  C:088CH         PUBLIC        ?C?SIDIV
+  -------         ENDMOD        ?C?SIDIV
+
+  -------         MODULE        ?C?UIDIV
+  C:08C2H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 005EH BYTE ( 4%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00B1H BYTE ( 8%) *
 ******************************************************************************
 
-Program Size: data=19.0 xdata=0 code=223
+Program Size: data=23.0 xdata=0 code=445
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
